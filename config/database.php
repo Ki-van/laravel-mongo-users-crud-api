@@ -37,7 +37,7 @@ return [
 
         'mongodb' => [
         'driver' => 'mongodb',
-        'dsn' => env('DB_URI', 'mongodb+srv://kivand:kivand123@cluster0.oz5ui.mongodb.net/radius_db?retryWrites=true&w=majority'),
+        'dsn' => env('DB_URI'),
         'database' => 'radius_db',
         ],
 
