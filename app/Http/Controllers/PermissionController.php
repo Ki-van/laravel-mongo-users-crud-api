@@ -14,7 +14,7 @@ class PermissionController extends Controller
      */
     public function index()
     {
-        //
+        return Permission::all();
     }
 
     /**
@@ -25,7 +25,9 @@ class PermissionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $permission = new Permission($request->only(['name']));
+        $permission->save();
+        return response()->json(["result" => "ok"], 201);
     }
 
     /**

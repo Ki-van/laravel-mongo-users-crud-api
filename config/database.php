@@ -36,9 +36,12 @@ return [
     'connections' => [
 
         'mongodb' => [
-        'driver' => 'mongodb',
-        'dsn' => env('DB_URI'),
-        'database' => 'radius_db',
+            'driver' => 'mongodb',
+            'host' => '127.0.0.1',
+            'port' => 27017,
+            'database' => 'rbacdb',
+            'username' => '',
+            'password' => ''
         ],
 
         'sqlite' => [
