@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Permission;
 use App\Models\Role;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,7 @@ class RoleController extends Controller
      */
     public function index()
     {
-        //
+        return  Role::all();
     }
 
     /**
@@ -25,7 +26,10 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $role = new Role($request->only('name'));
+        $role->permissions()->attach($request->only('permissions'));
+        $role->save();
+        return response()->json(["result" => "ok"], 201);
     }
 
     /**
@@ -48,7 +52,7 @@ class RoleController extends Controller
      */
     public function update(Request $request, Role $role)
     {
-        //
+
     }
 
     /**

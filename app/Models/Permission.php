@@ -10,8 +10,10 @@ class Permission extends Model
     use HasFactory;
     protected $connection = "mongodb";
     protected $fillable = ['name'];
+    protected $primaryKey = '_id';
+
 
     public function role() {
-        return $this->belongsTo(Role::class);
+        return $this->belongsToMany(Role::class, 'role_permission');
     }
 }

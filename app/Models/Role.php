@@ -9,6 +9,7 @@ class Role extends Model
 {
     use HasFactory;
     protected $connection = "mongodb";
+    protected $primaryKey = '_id';
 
     public function users() {
         $database = app(User::class)->getConnection()->getDatabaseName();
@@ -16,6 +17,7 @@ class Role extends Model
     }
 
     public function permissions() {
-        return $this->belongsToMany(Permission::class)->withTimestamps();
+        return $this->belongsToMany(Permission::class, 'role_permission')->withTimestamps();
     }
+
 }
