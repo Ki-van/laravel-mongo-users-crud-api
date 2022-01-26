@@ -15,9 +15,7 @@ class CreateRolesTable extends Migration
     {
         Schema::connection('mongodb')->create('roles', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->foreignId('permission_id')->constrained('permissions')->cascadeOnDelete()->cascadeOnUpdate();
-            $table->timestamps();
+            $table->string('name')->unique();
         });
     }
 

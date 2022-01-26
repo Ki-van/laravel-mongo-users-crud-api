@@ -15,7 +15,7 @@ class CreatePermissionsTable extends Migration
     {
         Schema::connection('mongodb')->create('permissions', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->unique();
         });
     }
 
