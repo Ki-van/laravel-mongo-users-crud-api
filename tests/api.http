@@ -14,9 +14,24 @@ Content-Type: application/json
         "61f1632e4a700000c200428c"
     ]
 }
+###
+
+PATCH http://127.0.0.1:8000/api/users/20
+Content-Type: application/json
+
+{
+    "name": "kivand",
+    "email": "kivand@yandex.ru",
+    "role_ids": [
+        "61f1632e4a700000c200428c",
+        "61f1632e4a700000c200428"
+    ]
+}
 
 ###
 GET http://localhost:8000/api/users
 Accept: application/json
 
 ###
+GET http://localhost:8000/api/users/20
+Accept: application/json

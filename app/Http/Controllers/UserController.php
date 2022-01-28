@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Role;
 use App\Models\User;
+use App\Models\UserRole;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -29,9 +30,21 @@ class UserController extends Controller
         /**
          * @var $user User
          */
+        $request->validate([
+            'name' => 'required|string',
+            'email' => 'required|email',
+            'password' => 'required|string'
+        ]);
         $user =  User::create($request->only(['name', 'email', 'password']));
-        $user->role()->associate(Role::find($request->input(['role_id'])));
-        $user->save();
+        if($request->has('role_ids')) {
+            $request->validate([
+                'role_ids' => 'array',
+                'role_ids.*' => 'string|exists:mongodb.roles,_id'
+            ]);
+            $user->user_roles()->createMany(array_map(function ($value) {
+                return ['role_id' => $value];
+            }, $request->input('role_ids')));
+        }
         return $user;
     }
 
@@ -43,19 +56,39 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = User::with('user_roles')->findOrFail($id);
+        return $user;
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, int $id)
     {
-        //
+        /**
+         * @var $user User
+         */
+        $user = User::findOrFail($id);
+        $user->update($request->only(['name', 'email']));
+        $request->validate([
+            'name' => 'required|string',
+            'email' => 'required|email',
+        ]);
+        if($request->has('role_ids')) {
+            $request->validate([
+                'role_ids' => 'array',
+                'role_ids.*' => 'string|exists:mongodb.roles,_id'
+            ]);
+            $user->user_roles()->delete();
+            $user->user_roles()->createMany(array_map(function ($value) {
+                return ['role_id' => $value];
+            }, $request->input('role_ids')));
+        }
+        return $user;
     }
 
     /**
@@ -66,6 +99,6 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return User::findOrFail($id)->delete();
     }
 }
