@@ -1,0 +1,22 @@
+GET http://127.0.0.1:8000/api/roles
+Accept: application/json
+
+###
+
+POST http://127.0.0.1:8000/api/users
+Content-Type: application/json
+
+{
+    "name": "kivand",
+    "email": "kivand@yandex.ru",
+    "password": "kivand123",
+    "role_ids": [
+        "61f1632e4a700000c200428c"
+    ]
+}
+
+###
+GET http://localhost:8000/api/users
+Accept: application/json
+
+###

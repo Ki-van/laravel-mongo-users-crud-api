@@ -9,11 +9,11 @@ class Role extends Model
 {
     use HasFactory;
     protected $connection = "mongodb";
-    protected $primaryKey = '_id';
+    protected $fillable = ['name'];
 
     public function users() {
-        $database = app(User::class)->getConnection()->getDatabaseName();
-        return $this->belongsToMany(User::class, $database."user_role", "role_id", "user_id");
+
+        return $this->hasMany(User::class);
     }
 
     public function permissions() {
