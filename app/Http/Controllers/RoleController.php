@@ -40,7 +40,7 @@ class RoleController extends Controller
      */
     public function show(Role $role)
     {
-        //
+        return $role;
     }
 
     /**
@@ -52,7 +52,7 @@ class RoleController extends Controller
      */
     public function update(Request $request, Role $role)
     {
-
+        return $role->update($request->only(['name']));
     }
 
     /**
@@ -63,6 +63,6 @@ class RoleController extends Controller
      */
     public function destroy(Role $role)
     {
-        //
+        return $role->delete();
     }
 }

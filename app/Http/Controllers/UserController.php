@@ -56,8 +56,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = User::with('user_roles')->findOrFail($id);
-        return $user;
+        return User::with('user_roles')->findOrFail($id);
     }
 
     /**
@@ -69,9 +68,6 @@ class UserController extends Controller
      */
     public function update(Request $request, int $id)
     {
-        /**
-         * @var $user User
-         */
         $user = User::findOrFail($id);
         $user->update($request->only(['name', 'email']));
         $request->validate([
